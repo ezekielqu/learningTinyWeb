@@ -28,6 +28,7 @@ int main() {
     // 创建5个子进程
     for(int i = 0; i < 5; i++) {
         pid = fork();
+        // 控制进程的数量，防止子进程再产生新的子进程
         if(pid == 0) {
             break;
         }
@@ -38,9 +39,10 @@ int main() {
         while(1) {
             printf("parent, pid = %d\n", getpid());
 
-            // int ret = wait(NULL);
+            // int ret = wait(NULL); 不获取子进程退出的状态
             int st;
             int ret = wait(&st);
+            printf("child die, pid = %d\n", ret);
 
             if(ret == -1) {
                 break;
