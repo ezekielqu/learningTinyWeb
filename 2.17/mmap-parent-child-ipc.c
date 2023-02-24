@@ -6,6 +6,7 @@
             - void *addr: NULL, 由内核指定
             - length : 要映射的数据的长度，这个值不能为0。建议使用文件的长度。
                     获取文件的长度：stat lseek
+                    会取分页的整数倍
             - prot : 对申请的内存映射区的操作权限
                 -PROT_EXEC ：可执行的权限
                 -PROT_READ ：读权限
@@ -21,7 +22,8 @@
                 - 注意：文件的大小不能为0，open指定的权限不能和prot参数有冲突。
                     prot: PROT_READ                open:只读/读写 
                     prot: PROT_READ | PROT_WRITE   open:读写
-            - offset：偏移量，一般不用。必须指定的是4k的整数倍，0表示不便宜。
+                    prot权限小于open权限
+            - offset：偏移量，一般不用。必须指定的是4k的整数倍，0表示不偏移。
         - 返回值：返回创建的内存的首地址
             失败返回MAP_FAILED，(void *) -1
 
